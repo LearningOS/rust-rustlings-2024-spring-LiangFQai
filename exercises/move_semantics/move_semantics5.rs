@@ -6,13 +6,15 @@
 // Execute `rustlings hint move_semantics5` or use the `hint` watch subcommand
 // for a hint.
 
-// I AM NOT DONE
+
 
 fn main() {
     let mut x = 100;
-    let y = &mut x;
-    let z = &mut x;
-    *y += 100;
-    *z += 1000;
-    assert_eq!(x, 1200);
+    let y =  x;
+    let z =  x;
+    let x_ref = &mut x; // 获取 x 的可变引用
+    *x_ref += y; // 修改 x 的值
+    *x_ref += 1000; // 继续修改 x 的值
+    assert_eq!(*x_ref, 1200); // 检查 x 的值是否为 1200
 }
+
