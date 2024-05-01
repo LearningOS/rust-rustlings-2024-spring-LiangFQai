@@ -14,7 +14,7 @@
 // Execute `rustlings hint hashmaps2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
 
 use std::collections::HashMap;
 
@@ -26,7 +26,6 @@ enum Fruit {
     Lychee,
     Pineapple,
 }
-
 fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
     let fruit_kinds = vec![
         Fruit::Apple,
@@ -37,9 +36,29 @@ fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
     ];
 
     for fruit in fruit_kinds {
-        // TODO: Insert new fruits if they are not already present in the
-        // basket. Note that you are not allowed to put any type of fruit that's
-        // already present!
+        // 检查水果是否已存在于篮子中
+        if !basket.contains_key(&fruit) {
+            // 如果不存在，以默认数量1将其插入
+            basket.insert(fruit, 1);
+        }
+    }
+
+    // 计算水果总数
+    let mut total_fruits: u32 = basket.values().sum();
+
+    // 添加更多水果，以至少达到总数为11
+    while total_fruits <= 11 {
+        // 添加一个随机水果
+        let new_fruit = match basket.len() {
+            0 => Fruit::Apple,     // 如果篮子是空的，添加苹果
+            1 => Fruit::Banana,    // 如果篮子中只有一个水果，添加香蕉
+            2 => Fruit::Mango,     // 如果篮子中只有两个水果，添加芒果
+            3 => Fruit::Lychee,    // 如果篮子中只有三个水果，添加荔枝
+            _ => Fruit::Pineapple, // 否则添加菠萝
+        };
+        basket.entry(new_fruit).or_insert(1); // 插入水果
+        // 重新计算水果总数
+        total_fruits = basket.values().sum();
     }
 }
 
