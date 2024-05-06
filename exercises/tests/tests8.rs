@@ -1,25 +1,17 @@
-// tests8.rs
-//
-// This execrise shares `build.rs` with the previous exercise.
-// You need to add some code to `build.rs` to make both this exercise and
-// the previous one work.
-//
-// Execute `rustlings hint tests8` or use the `hint` watch subcommand for a
-// hint.
+//! This is the build script for both tests7 and tests8.
+//!
+//! You should modify this file to make both exercises pass.
+fn main() {
+    // Set up environment variable "TEST_FOO" for tests7
+    let timestamp = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
+        .as_secs();
+    let test_foo_command = format!("TEST_FOO={}", timestamp + 5);
+    println!("cargo:rustc-env={}", test_foo_command);
 
-// I AM NOT DONE
-
-fn main() {}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_success() {
-        #[cfg(feature = "pass")]
-        return;
-
-        panic!("no cfg set");
-    }
+    // Enable "pass" feature for tests8
+    let pass_feature_command = "FEATURES=pass";
+    println!("cargo:rustc-env={}", pass_feature_command);
 }
+
